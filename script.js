@@ -1,4 +1,3 @@
-const initApp = () => {
   const loggedInEmail = localStorage.getItem("loggedInEmail");
   if (loggedInEmail) {
     toggleVisibility("loginPage", "reservationPage");
@@ -106,4 +105,3 @@ const displayReservations = (email) => {
   }
 };
 
-window.onload = initApp;
