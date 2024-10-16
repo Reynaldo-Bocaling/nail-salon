@@ -1,89 +1,78 @@
-const loggedInEmail = localStorage.getItem("loggedInEmail");
-if (loggedInEmail) {
-  document.getElementById("loginPage").classList.add("hidden");
-  document.getElementById("reservationPage").classList.remove("hidden");
-  displayReservations(loggedInEmail);
-}
+const initApp = () => {
+  const loggedInEmail = localStorage.getItem("loggedInEmail");
+  if (loggedInEmail) {
+    toggleVisibility("loginPage", "reservationPage");
+    displayReservations(loggedInEmail);
+  }
+};
 
-// Toggle between Sign In and Sign Up forms
-document.getElementById("signInToggle").addEventListener("click", function () {
-  document.getElementById("signInFormContainer").classList.remove("hidden");
-  document.getElementById("signUpFormContainer").classList.add("hidden");
-  document.getElementById("signInToggle").classList.add("hidden");
-  document.getElementById("signUpToggle").classList.remove("hidden");
+const toggleVisibility = (hideId, showId) => {
+  document.getElementById(hideId).classList.add("hidden");
+  document.getElementById(showId).classList.remove("hidden");
+};
+
+document.getElementById("signInToggle").addEventListener("click", () => {
+  toggleVisibility("signUpFormContainer", "signInFormContainer");
+  toggleVisibility("signInToggle", "signUpToggle");
 });
 
-document.getElementById("signUpToggle").addEventListener("click", function () {
-  document.getElementById("signInFormContainer").classList.add("hidden");
-  document.getElementById("signUpFormContainer").classList.remove("hidden");
-  document.getElementById("signUpToggle").classList.add("hidden");
-  document.getElementById("signInToggle").classList.remove("hidden");
+document.getElementById("signUpToggle").addEventListener("click", () => {
+  toggleVisibility("signInFormContainer", "signUpFormContainer");
+  toggleVisibility("signUpToggle", "signInToggle");
 });
 
 // Handle Sign In
-document
-  .getElementById("signInForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+document.getElementById("signInForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    // Mocking authentication
-    if (localStorage.getItem("users")) {
-      const users = JSON.parse(localStorage.getItem("users"));
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
-      if (user) {
-        localStorage.setItem("loggedInEmail", email);
-        document.getElementById("loginPage").classList.add("hidden");
-        document.getElementById("reservationPage").classList.remove("hidden");
-        displayReservations(email);
-      } else {
-        document.getElementById("emailError").classList.remove("hidden");
-      }
-    }
-  });
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(
+    (user) => user.email === email && user.password === password
+  );
+  if (user) {
+    localStorage.setItem("loggedInEmail", email);
+    toggleVisibility("loginPage", "reservationPage");
+    displayReservations(email);
+  } else {
+    document.getElementById("emailError").classList.remove("hidden");
+  }
+});
 
 // Handle Sign Up
-document
-  .getElementById("signUpForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    const name = document.getElementById("signUpName").value;
-    const email = document.getElementById("signUpEmail").value;
-    const password = document.getElementById("signUpPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+document.getElementById("signUpForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = document.getElementById("signUpName").value;
+  const email = document.getElementById("signUpEmail").value;
+  const password = document.getElementById("signUpPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (password === confirmPassword) {
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      if (!users.find((user) => user.email === email)) {
-        users.push({ name, email, password });
-        localStorage.setItem("users", JSON.stringify(users));
-        alert("Sign Up Successful! Please Sign In.");
-        document.getElementById("signUpFormContainer").classList.add("hidden");
-        document
-          .getElementById("signInFormContainer")
-          .classList.remove("hidden");
-      } else {
-        alert("Email already exists.");
-      }
+  if (password === confirmPassword) {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    if (!users.some((user) => user.email === email)) {
+      users.push({ name, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Sign Up Successful! Please Sign In.");
+      toggleVisibility("signUpFormContainer", "signInFormContainer");
     } else {
-      alert("Passwords do not match.");
+      alert("Email already exists.");
     }
-  });
+  } else {
+    alert("Passwords do not match.");
+  }
+});
 
 // Handle Logout
-document.getElementById("logoutButton").addEventListener("click", function () {
+document.getElementById("logoutButton").addEventListener("click", () => {
   localStorage.removeItem("loggedInEmail");
-  document.getElementById("reservationPage").classList.add("hidden");
-  document.getElementById("loginPage").classList.remove("hidden");
+  toggleVisibility("reservationPage", "loginPage");
 });
 
 // Handle Reservation
 document
   .getElementById("reservationForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", (event) => {
     event.preventDefault();
     const date = document.getElementById("date").value;
     const time = document.getElementById("time").value;
@@ -91,29 +80,30 @@ document
     const email = localStorage.getItem("loggedInEmail");
 
     const reservations = JSON.parse(localStorage.getItem("reservations")) || {};
-    if (!reservations[email]) {
-      reservations[email] = [];
-    }
+    reservations[email] = reservations[email] || [];
     reservations[email].push({ date, time, service });
     localStorage.setItem("reservations", JSON.stringify(reservations));
+
     displayReservations(email);
     document.getElementById("reservationForm").reset();
   });
 
 // Display Reservations for the logged-in user
-function displayReservations(email) {
+const displayReservations = (email) => {
   const reservations = JSON.parse(localStorage.getItem("reservations")) || {};
   const reservationList = document.getElementById("reservationList");
   reservationList.innerHTML = "";
 
   if (reservations[email]) {
-    reservations[email].forEach((reservation) => {
+    reservations[email].forEach(({ date, time, service }) => {
       const listItem = document.createElement("li");
       listItem.className = "border border-gray-300 rounded-lg p-4";
-      listItem.innerHTML = `Date: ${reservation.date}, Time: ${reservation.time}, Service: ${reservation.service}`;
+      listItem.innerHTML = `Date: ${date}, Time: ${time}, Service: ${service}`;
       reservationList.appendChild(listItem);
     });
   } else {
     reservationList.innerHTML = "<li>No reservations found.</li>";
   }
-}
+};
+
+window.onload = initApp;
