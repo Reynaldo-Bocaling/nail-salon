@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nail Salon Reservation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        font-family: Arial, sans-serif;
+        scroll-behavior: smooth;
+      }
+      #loginPage,
+      #reservationPage {
+        background: url("./assets//signUpInBg.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+      }
+      .blur-bg {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.3);
+      }
+    </style>
+  </head>
+  <body class="bg-[#FEC0CA]">
+    <!-- header -->
+
+    <header class="blur-bg w-full fixed top-0 Left-0">
+      <div
+        class="container mx-auto px-5 py-4 flex items-center justify-between px-5"
+      >
+        <h1 class="text-white text-xl md:text-3xl font-bold">
+          Nail <span class="text-pink-300">Salon</span>
+        </h1>
+        <div class="flex items-center gap-4 md:gap-7">
+          <a class="text-base font-medium tracking-wide" href="/#about"
+            >About Us</a
+          >
+          <a class="text-lg font-medium tracking-wide" href="/#reservation"
+            >Reservation</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- home page -->
+    <section class="w-full">
+      <img src="./assets//homePage.png" class="w-full" alt="" />
+    </section>
+
+    <!-- about page -->
+    <section id="about" class="container mx-auto py-7">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+        <div class="w-full md:w-1/2 pt-12 px-5">
+          <h1 class="text-white text-3xl font-semibold mb-4">About Us</h1>
+          <p class="text-sm text-white tracking-wider mb-4">
+            At our nail salon, we prioritize quality and care, offering
+            personalized services in a relaxing atmosphere. Your beauty and
+            satisfaction are our top priorities.
+          </p>
+          <p class="text-sm text-white tracking-wider">
+            With a talented team of skilled technicians, we ensure a delightful
+            experience that enhances your natural beauty and boosts your
+            confidence
+          </p>
+          <div class="flex items-center justify-center gap-7 py-7 px-5">
+            <img src="./assets//fb.svg" class="w-14 rounded-full" alt="" />
+            <img src="./assets/twitter2.png" class="w-16 rounded-full" alt="" />
+            <img
+              src="./assets/instagram2.png"
+              class="w-16 rounded-full"
+              alt=""
+            />
+            <img src="./assets/yt.webp" class="w-16 rounded-full" alt="" />
+          </div>
+        </div>
+        <img
+          src="./assets//about-nail.jpg"
+          class="w-full md:w-1/2 rounded-2xl"
+          alt=""
+        />
+      </div>
+    </section>
+
+    <!-- login page -->
+    <section id="reservation" class="mt-28 md:mt-0">
+      <!-- Container for Sign In/Sign Up -->
+      <div
+        id="loginPage"
+        class="flex md:min-h-screen items-center justify-center"
+      >
+        <div
+          class="flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-2xl shadow-lg overflow-hidden"
+        >
+          <!-- Left Side: Sign In/Sign Up Toggle -->
+          <div
+            class="w-full md:w-1/2 bg-pink-100 p-8 pb-2 flex flex-col justify-center items-center"
+          >
+            <h2 class="text-3xl font-bold mb-4">Welcome to Nail Salon</h2>
+            <p
+              class="text-base text-gray-500 text-center tracking-wider mb-7 max-w-2xl"
+            >
+              Discover our nail salon, where beauty meets relaxation. Secure
+              your appointment now and treat yourself to exquisite nail designs
+              and exceptional service!
+            </p>
+            <div class="flex space-x-4 mb-8">
+              <button
+                id="signInToggle"
+                class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-700"
+              >
+                Sign In
+              </button>
+              <button
+                id="signUpToggle"
+                class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-700"
+              >
+                Sign Up
+              </button>
+            </div>
+            <img
+              src="./assets/sgnUnModel.png"
+              alt="Nail Salon Image"
+              class="mb-8 w-80"
+            />
+          </div>
+
+          <!-- Right Side: Sign In Form -->
+          <div
+            id="signInFormContainer"
+            class="w-full md:w-1/2 bg-white px-8 py-12"
+          >
+            <h2 class="text-3xl font-bold mb-6">Sign In</h2>
+            <form id="signInForm">
+              <div class="mb-4">
+                <label class="block text-gray-500 font-semibold tracking-wide"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="user@example.com"
+                  required
+                />
+                <p class="text-red-500 text-sm mt-1 hidden" id="emailError">
+                  Please provide a valid email address.
+                </p>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-500 font-semibold tracking-wide"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+              <div class="flex items-center mb-4">
+                <input type="checkbox" id="rememberMe" class="mr-2" />
+                <label for="rememberMe" class="text-gray-700"
+                  >Remember me</label
+                >
+              </div>
+              <button
+                type="submit"
+                class="bg-pink-500 text-white px-6 py-4 rounded-lg hover:bg-pink-700 w-full font-bold"
+              >
+                Sign In
+              </button>
+            </form>
+          </div>
+
+          <!-- Right Side: Sign Up Form (Initially Hidden) -->
+          <div
+            id="signUpFormContainer"
+            class="hidden w-full md:w-1/2 bg-white p-8"
+          >
+            <h2 class="text-3xl font-bold mb-6">Sign Up</h2>
+            <form id="signUpForm" class="w-full">
+              <div class="mb-4">
+                <label class="block text-gray-700">Name</label>
+                <input
+                  type="text"
+                  id="signUpName"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700">Email address</label>
+                <input
+                  type="email"
+                  id="signUpEmail"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="user@example.com"
+                  required
+                />
+                <p
+                  class="text-red-500 text-sm mt-1 hidden"
+                  id="signUpEmailError"
+                >
+                  Please provide a valid email address.
+                </p>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700">Password</label>
+                <input
+                  type="password"
+                  id="signUpPassword"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="Create a password"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  placeholder="Confirm your password"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="bg-pink-500 text-white px-6 py-4 rounded-lg hover:bg-pink-700 w-full font-bold"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reservation Page -->
+      <div
+        id="reservationPage"
+        class="hidden min-h-screen flex items-center justify-center"
+      >
+        <div
+          class="flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-lg overflow-hidden"
+        >
+          <!-- Left Side: List of Reservations -->
+          <div
+            class="w-full md:w-1/2 bg-pink-100 p-8 flex flex-col justify-start items-start"
+          >
+            <h2 class="text-3xl font-bold mb-4">My Reservations</h2>
+            <ul id="reservationList" class="w-full space-y-4"></ul>
+            <button
+              id="logoutButton"
+              class="mt-6 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+            >
+              Logout
+            </button>
+          </div>
+
+          <!-- Right Side: Reservation Form -->
+          <div class="w-full md:w-1/2 bg-white p-8">
+            <h2 class="text-3xl font-bold mb-6">Make a Reservation</h2>
+            <form id="reservationForm">
+              <div class="mb-4">
+                <label class="block text-gray-700">Select Date</label>
+                <input
+                  type="date"
+                  id="date"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700">Select Time</label>
+                <input
+                  type="time"
+                  id="time"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700">Service Type</label>
+                <select
+                  id="service"
+                  class="w-full px-4 py-4 border border-gray-300 rounded-lg"
+                >
+                  <option value="Manicure">Manicure</option>
+                  <option value="Pedicure">Pedicure</option>
+                  <option value="Nail Art">Nail Art</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="bg-pink-500 text-white px-6 py-4 rounded-lg hover:bg-pink-700 w-full font-bold"
+              >
+                Reserve
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="./script.js" />
+  </body>
+</html>
